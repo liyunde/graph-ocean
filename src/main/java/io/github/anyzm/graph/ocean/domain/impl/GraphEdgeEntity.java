@@ -22,7 +22,7 @@ import java.util.Map;
  */
 @Getter
 @ToString
-public class GraphEdgeEntity<S, T, E> extends GraphPropertyEntity implements GraphRelation {
+public class GraphEdgeEntity<S, T, E> extends GraphPropertyEntity implements GraphRelation<S, T, E> {
     /**
      * 起点 id
      */
@@ -114,7 +114,7 @@ public class GraphEdgeEntity<S, T, E> extends GraphPropertyEntity implements Gra
     }
 
     @Override
-    public List<GraphEdgeEntity> getEdges() {
+    public List<GraphEdgeEntity<S, T, E>> getEdges() {
         return Collections.singletonList(this);
     }
 }

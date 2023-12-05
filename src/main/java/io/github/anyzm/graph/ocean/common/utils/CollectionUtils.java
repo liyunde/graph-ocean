@@ -17,11 +17,11 @@ import java.util.Map;
  */
 public class CollectionUtils extends org.apache.commons.collections.CollectionUtils {
 
-    public static int size(Map map) {
+    public static int size(Map<?, ?> map) {
         return map == null ? 0 : map.size();
     }
 
-    public static int size(Collection collection) {
+    public static int size(Collection<?> collection) {
         return collection == null ? 0 : collection.size();
     }
 

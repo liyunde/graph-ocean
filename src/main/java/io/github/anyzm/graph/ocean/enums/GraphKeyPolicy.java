@@ -13,6 +13,7 @@ import lombok.Getter;
  * description CaseStatusEnum is used for
  * date 2020/1/14 - 15:06
  */
+@Getter
 public enum GraphKeyPolicy {
 
     /**
@@ -30,8 +31,7 @@ public enum GraphKeyPolicy {
 
     ;
 
-    @Getter
-    private String keyWrapWord;
+    private final String keyWrapWord;
 
 
     GraphKeyPolicy(String keyWrapWord) {

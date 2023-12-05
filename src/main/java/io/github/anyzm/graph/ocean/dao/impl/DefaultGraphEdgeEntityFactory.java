@@ -17,9 +17,10 @@ import io.github.anyzm.graph.ocean.enums.GraphPropertyTypeEnum;
 import io.github.anyzm.graph.ocean.exception.CheckThrower;
 import io.github.anyzm.graph.ocean.exception.NebulaException;
 import com.google.common.collect.Maps;
-import javafx.util.Pair;
+
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.tuple.Pair;
 
 import java.lang.reflect.Field;
 import java.util.Map;
@@ -31,7 +32,7 @@ import java.util.Map;
 @Slf4j
 public class DefaultGraphEdgeEntityFactory implements GraphEdgeEntityFactory {
 
-    private GraphTypeManager graphTypeManager;
+    private final GraphTypeManager graphTypeManager;
 
     public DefaultGraphEdgeEntityFactory() {
         this.graphTypeManager = new DefaultGraphTypeManager();
@@ -69,7 +70,7 @@ public class DefaultGraphEdgeEntityFactory implements GraphEdgeEntityFactory {
                 propertyMap.put(graphProperty.value(), value);
             }
         }
-        return new Pair<String, String>(srcId, dstId);
+        return Pair.of(srcId, dstId);
     }
 
     @Override
@@ -82,14 +83,14 @@ public class DefaultGraphEdgeEntityFactory implements GraphEdgeEntityFactory {
         if (graphEdgeType == null) {
             return null;
         }
-        //起点类型
+        // 起点类型
         GraphVertexType<?> srcVertexType = graphEdgeType.getSrcVertexType();
-        //终点类型
+        // 终点类型
         GraphVertexType<?> dstVertexType = graphEdgeType.getDstVertexType();
         Field[] declaredFields = inputClass.getDeclaredFields();
         String srcId = null;
         String dstId = null;
-        //所有属性与值
+        // 所有属性与值
         Map<String, Object> propertyMap = Maps.newHashMapWithExpectedSize(declaredFields.length);
         Pair<String, String> idPair = collectEdgeEntityProperties(input, declaredFields, graphEdgeType, propertyMap);
         srcId = StringUtils.isNotBlank(idPair.getKey()) ? idPair.getKey() : srcId;

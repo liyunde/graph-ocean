@@ -48,7 +48,7 @@ public class NebulaQueryUtils {
     }
 
     public static void yield(GraphTypeManager graphTypeManager, StringBuilder sqlBuilder, Class clazz, String... fields) {
-        yield(graphTypeManager, sqlBuilder, null, clazz, fields);
+        NebulaQueryUtils.yield(graphTypeManager, sqlBuilder, null, clazz, fields);
     }
 
     public static void yield(GraphTypeManager graphTypeManager, StringBuilder sqlBuilder, String symbol, Class clazz, String... fields) {

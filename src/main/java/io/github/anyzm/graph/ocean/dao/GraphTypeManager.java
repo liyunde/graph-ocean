@@ -25,7 +25,7 @@ public interface GraphTypeManager {
      * @return 顶点类型
      * @throws NebulaException 构造异常
      */
-    public <T> GraphVertexType<T> getGraphVertexType(Class<T> clazz) throws NebulaException;
+    <T> GraphVertexType<T> getGraphVertexType(Class<T> clazz) throws NebulaException;
 
 
     /**
@@ -34,13 +34,13 @@ public interface GraphTypeManager {
      * @return 顶点类型
      * @throws NebulaException 构造异常
      */
-    public <S, T, E> GraphEdgeType<S, T, E> getGraphEdgeType(Class<E> clazz) throws NebulaException;
+    <S, T, E> GraphEdgeType<S, T, E> getGraphEdgeType(Class<E> clazz) throws NebulaException;
 
     /**
      * @param clazz 类类型
      * @return 图标签
      * @throws NebulaException nebula异常
      */
-    public GraphLabel getGraphLabel(Class clazz) throws NebulaException;
+    GraphLabel getGraphLabel(Class clazz) throws NebulaException;
 
 }

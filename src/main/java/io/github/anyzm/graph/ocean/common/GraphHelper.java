@@ -18,9 +18,10 @@ import io.github.anyzm.graph.ocean.enums.GraphDataTypeEnum;
 import io.github.anyzm.graph.ocean.enums.GraphKeyPolicy;
 import io.github.anyzm.graph.ocean.enums.GraphPropertyTypeEnum;
 import io.github.anyzm.graph.ocean.exception.NebulaException;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
 
+import javax.annotation.Nonnull;
 import java.lang.reflect.Field;
 import java.sql.Timestamp;
 import java.time.LocalDate;
@@ -33,11 +34,11 @@ import java.util.regex.Pattern;
  * @author Anyzm
  * date 2020/4/16
  */
-@Log4j2
+@Slf4j
 public class GraphHelper {
-    private static String ENDPOINT_TEMPLATE = "%s(\"%s\")";
-    private static String STRING_ID_TEMPLATE = "%s \"%s\" ";
-    public static final Pattern SPECIAL_CHAR_PATTERN = Pattern.compile("[\n\t\"\'()<>/\\\\]");
+    private static final String ENDPOINT_TEMPLATE = "%s(\"%s\")";
+    private static final String STRING_ID_TEMPLATE = "%s \"%s\" ";
+    public static final Pattern SPECIAL_CHAR_PATTERN = Pattern.compile("[\n\t\"'()<>/\\\\]");
 
 
     /**
@@ -61,7 +62,7 @@ public class GraphHelper {
         return timestamp.getTime() / 1000;
     }
 
-    private static String generateKeyPolicy(GraphKeyPolicy graphKeyPolicy, String vertexIdKey) {
+    private static String generateKeyPolicy(GraphKeyPolicy graphKeyPolicy,@Nonnull String vertexIdKey) {
         if (graphKeyPolicy.equals(GraphKeyPolicy.string_key)) {
             return String.format(STRING_ID_TEMPLATE, graphKeyPolicy.getKeyWrapWord(), vertexIdKey);
         } else {
