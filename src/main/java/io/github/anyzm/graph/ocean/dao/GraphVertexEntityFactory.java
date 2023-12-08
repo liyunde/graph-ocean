@@ -22,6 +22,6 @@ public interface GraphVertexEntityFactory {
      * @return 顶点实体
      * @throws NebulaException nebula异常
      */
-    public <T> GraphVertexEntity<T> buildGraphVertexEntity(T input) throws NebulaException;
+    <T> GraphVertexEntity<T> buildGraphVertexEntity(T input) throws NebulaException;
 
 }

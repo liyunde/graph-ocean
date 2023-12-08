@@ -29,8 +29,6 @@ import java.util.stream.StreamSupport;
  * @version 1.0.0
  * description QueryResult is used for
  * date 2020/3/27 - 10:13
- * @update chenrui
- * @date 2020/08/30
  */
 @ToString
 public class QueryResult implements Iterable<ResultSet.Record>, Serializable {
@@ -101,7 +99,7 @@ public class QueryResult implements Iterable<ResultSet.Record>, Serializable {
         field.set(obj, value);
     }
 
-    //解析nebula结果成java bean格式
+    // 解析nebula结果成java bean格式
     private <T> T parseResult(ResultSet.Record record, GraphLabel graphLabel, Class<T> clazz) throws IllegalAccessException, InstantiationException, UnsupportedEncodingException {
         T obj = clazz.newInstance();
         List<Field> fieldsList = FieldUtils.listFields(clazz);
@@ -109,53 +107,56 @@ public class QueryResult implements Iterable<ResultSet.Record>, Serializable {
             GraphProperty annotation = field.getAnnotation(GraphProperty.class);
             String key = annotation != null ? annotation.value() : field.getName();
             if (record.contains(key)) {
-                ValueWrapper valueWrapper = record.get(key);
-                if (!valueWrapper.isNull()) {
-                    field.setAccessible(true);
-                    if (annotation != null && !GraphDataTypeEnum.NULL.equals(annotation.dataType())) {
-                        switch (annotation.dataType()) {
-                            case INT:
-                                dealFieldReformat(graphLabel, key, field, obj, valueWrapper.asLong());
-                                break;
-                            case STRING:
-                                dealFieldReformat(graphLabel, key, field, obj, valueWrapper.asString());
-                                break;
-                            case DATE:
-                                dealFieldReformat(graphLabel, key, field, obj, valueWrapper.asDate());
-                                break;
-                            case DATE_TIME:
-                                dealFieldReformat(graphLabel, key, field, obj, valueWrapper.asDateTime());
-                                break;
-                            case BOOLEAN:
-                                dealFieldReformat(graphLabel, key, field, obj, valueWrapper.asBoolean());
-                                break;
-                            case TIMESTAMP:
-                                dealFieldReformat(graphLabel, key, field, obj, valueWrapper.asTime());
-                                break;
-                            case DOUBLE:
-                                dealFieldReformat(graphLabel, key, field, obj, valueWrapper.asDouble());
-                                break;
-                            default:
-                        }
-                        continue;
+            } else if (record.contains(field.getName())) {
+                key = field.getName();
+            }else continue;
+            ValueWrapper valueWrapper = record.get(key);
+            if (!valueWrapper.isNull()) {
+                field.setAccessible(true);
+                if (annotation != null && !GraphDataTypeEnum.NULL.equals(annotation.dataType())) {
+                    switch (annotation.dataType()) {
+                        case INT:
+                            dealFieldReformat(graphLabel, key, field, obj, valueWrapper.asLong());
+                            break;
+                        case STRING:
+                            dealFieldReformat(graphLabel, key, field, obj, valueWrapper.asString());
+                            break;
+                        case DATE:
+                            dealFieldReformat(graphLabel, key, field, obj, valueWrapper.asDate());
+                            break;
+                        case DATE_TIME:
+                            dealFieldReformat(graphLabel, key, field, obj, valueWrapper.asDateTime());
+                            break;
+                        case BOOLEAN:
+                            dealFieldReformat(graphLabel, key, field, obj, valueWrapper.asBoolean());
+                            break;
+                        case TIMESTAMP:
+                            dealFieldReformat(graphLabel, key, field, obj, valueWrapper.asTime());
+                            break;
+                        case DOUBLE:
+                            dealFieldReformat(graphLabel, key, field, obj, valueWrapper.asDouble());
+                            break;
+                        default:
                     }
-                    if (valueWrapper.isLong()) {
-                        dealFieldReformat(graphLabel, key, field, obj, valueWrapper.asLong());
-                    } else if (valueWrapper.isBoolean()) {
-                        dealFieldReformat(graphLabel, key, field, obj, valueWrapper.asBoolean());
-                    } else if (valueWrapper.isDouble()) {
-                        dealFieldReformat(graphLabel, key, field, obj, valueWrapper.asDouble());
-                    } else if (valueWrapper.isDate()) {
-                        dealFieldReformat(graphLabel, key, field, obj, valueWrapper.asDouble());
-                    } else if (valueWrapper.isDateTime()) {
-                        dealFieldReformat(graphLabel, key, field, obj, valueWrapper.asDateTime());
-                    } else if (valueWrapper.isTime()) {
-                        dealFieldReformat(graphLabel, key, field, obj, valueWrapper.asTime());
-                    } else if (valueWrapper.isString()) {
-                        dealFieldReformat(graphLabel, key, field, obj, valueWrapper.asString());
-                    }
+                    continue;
+                }
+                if (valueWrapper.isLong()) {
+                    dealFieldReformat(graphLabel, key, field, obj, valueWrapper.asLong());
+                } else if (valueWrapper.isBoolean()) {
+                    dealFieldReformat(graphLabel, key, field, obj, valueWrapper.asBoolean());
+                } else if (valueWrapper.isDouble()) {
+                    dealFieldReformat(graphLabel, key, field, obj, valueWrapper.asDouble());
+                } else if (valueWrapper.isDate()) {
+                    dealFieldReformat(graphLabel, key, field, obj, valueWrapper.asDouble());
+                } else if (valueWrapper.isDateTime()) {
+                    dealFieldReformat(graphLabel, key, field, obj, valueWrapper.asDateTime());
+                } else if (valueWrapper.isTime()) {
+                    dealFieldReformat(graphLabel, key, field, obj, valueWrapper.asTime());
+                } else if (valueWrapper.isString()) {
+                    dealFieldReformat(graphLabel, key, field, obj, valueWrapper.asString());
                 }
             }
+
         }
         return obj;
     }

@@ -72,9 +72,9 @@ public class GraphVertexType<T> extends AbstractGraphLabel {
      * @param vertexKey 真实的id数据
      * @return
      */
-    public String getVertexIdKey(String vertexKey) {
+    public T getVertexIdKey(T vertexKey) {
         if (idValueFormatter != null) {
-            vertexKey = (String) idValueFormatter.format(vertexKey);
+            vertexKey = (T) idValueFormatter.format(vertexKey);
         }
         return vertexKey;
     }

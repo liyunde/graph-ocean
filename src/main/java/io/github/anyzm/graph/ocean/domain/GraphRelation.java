@@ -20,14 +20,14 @@ public interface GraphRelation<S, T, E> {
      *
      * @return 起点id
      */
-    String getSrcId();
+    S getSrcId();
 
     /**
      * 获取 endId
      *
      * @return 终点id
      */
-    String getDstId();
+    T getDstId();
 
     /**
      * 获取 VertexType
@@ -41,7 +41,7 @@ public interface GraphRelation<S, T, E> {
      *
      * @return 终点顶点类型
      */
-    GraphVertexType<E> getDstVertexType();
+    GraphVertexType<T> getDstVertexType();
 
     /**
      * 获取关联的顶点

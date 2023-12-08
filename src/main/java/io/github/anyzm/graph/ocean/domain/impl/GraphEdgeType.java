@@ -70,9 +70,9 @@ public class GraphEdgeType<S, T, E> extends AbstractGraphLabel {
      * @param vertexKey 原始的id数据
      * @return
      */
-    public String getSrcIdKey(String vertexKey) {
+    public <T> T getSrcIdKey(T vertexKey) {
         if (srcIdValueFormatter != null) {
-            vertexKey = (String) srcIdValueFormatter.format(vertexKey);
+            vertexKey = (T) srcIdValueFormatter.format(vertexKey);
         }
         return vertexKey;
     }
@@ -83,9 +83,9 @@ public class GraphEdgeType<S, T, E> extends AbstractGraphLabel {
      * @param vertexKey 原始的id数据
      * @return
      */
-    public String getDstIdKey(String vertexKey) {
+    public <T> T getDstIdKey(T vertexKey) {
         if (dstIdValueFormatter != null) {
-            vertexKey = (String) dstIdValueFormatter.format(vertexKey);
+            vertexKey = (T) dstIdValueFormatter.format(vertexKey);
         }
         return vertexKey;
     }

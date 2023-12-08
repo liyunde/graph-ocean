@@ -67,7 +67,7 @@ public class NebulaBatchVertexUpdate<T> implements VertexUpdateEngine {
 
     private String generateUpsetSql(GraphVertexEntity graphVertexEntity) throws NebulaException {
         Set<Map.Entry<String, Object>> entries = graphVertexEntity.getProps().entrySet();
-        String queryId = GraphHelper.getQueryId(this.graphVertexType, graphVertexEntity.getId());
+        Object queryId = GraphHelper.getQueryId(this.graphVertexType, graphVertexEntity.getId());
         StringBuilder builder = new StringBuilder();
         Map<String, GraphDataTypeEnum> dataTypeMap = graphVertexEntity.getGraphVertexType().getDataTypeMap();
         for (Map.Entry<String, Object> entry : entries) {

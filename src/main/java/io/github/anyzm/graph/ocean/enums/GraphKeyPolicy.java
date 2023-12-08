@@ -29,6 +29,7 @@ public enum GraphKeyPolicy {
      */
     string_key(""),
 
+    int64("int64"),
     ;
 
     private final String keyWrapWord;

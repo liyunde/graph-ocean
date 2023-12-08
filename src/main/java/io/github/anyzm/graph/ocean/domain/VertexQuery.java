@@ -23,7 +23,7 @@ public interface VertexQuery extends GraphQuery {
      * @param vertexIds 顶点id
      * @return 顶点查询API
      */
-    public VertexQuery fetchPropOn(Class clazz, String... vertexIds);
+    <T> VertexQuery fetchPropOn(Class clazz, T... vertexIds);
 
 
     /**

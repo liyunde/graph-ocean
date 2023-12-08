@@ -39,9 +39,9 @@ public class DefaultGraphVertexEntityFactory implements GraphVertexEntityFactory
         this.graphTypeManager = new DefaultGraphTypeManager();
     }
 
-    private <T> String collectVertexEntityProperties(T input, Field[] declaredFields, GraphVertexType<T> graphVertexType,
-                                                     Map<String, Object> propertyMap) {
-        String id = null;
+    private <T> T collectVertexEntityProperties(T input, Field[] declaredFields, GraphVertexType<T> graphVertexType,
+                                                Map<String, Object> propertyMap) {
+        T id = null;
         for (Field declaredField : declaredFields) {
             declaredField.setAccessible(true);
             GraphProperty graphProperty = declaredField.getAnnotation(GraphProperty.class);
@@ -50,7 +50,7 @@ public class DefaultGraphVertexEntityFactory implements GraphVertexEntityFactory
             }
             Object value = GraphHelper.formatFieldValue(declaredField, graphProperty, input, graphVertexType);
             if (graphProperty.propertyTypeEnum().equals(GraphPropertyTypeEnum.GRAPH_VERTEX_ID)) {
-                id = (String) value;
+                id = (T) value;
                 if (!graphVertexType.isIdAsField()) {
                     continue;
                 }
@@ -73,18 +73,20 @@ public class DefaultGraphVertexEntityFactory implements GraphVertexEntityFactory
             return null;
         }
         Field[] declaredFields = inputClass.getDeclaredFields();
-        String id = null;
+        T id = null;
         Map<String, Object> propertyMap = Maps.newHashMapWithExpectedSize(declaredFields.length);
-        String tempId = collectVertexEntityProperties(input, declaredFields, graphVertexType, propertyMap);
-        id = StringUtils.isNotBlank(tempId) ? tempId : id;
+        T tempId = collectVertexEntityProperties(input, declaredFields, graphVertexType, propertyMap);
+        if (tempId instanceof String && StringUtils.isNotBlank((CharSequence) tempId)) {
+            id = tempId;
+        } else if (tempId instanceof Long && ((Long) tempId) > 0) id = tempId;
         Class<? super T> superclass = inputClass.getSuperclass();
         while (superclass != Object.class) {
             declaredFields = superclass.getDeclaredFields();
             tempId = collectVertexEntityProperties(input, declaredFields, graphVertexType, propertyMap);
-            id = StringUtils.isNotBlank(tempId) ? tempId : id;
+            id = StringUtils.isNotBlank((CharSequence) tempId) ? tempId : id;
             superclass = superclass.getSuperclass();
         }
-        CheckThrower.ifTrueThrow(StringUtils.isBlank(id), ErrorEnum.INVALID_ID);
+        CheckThrower.ifTrueThrow(id == null, ErrorEnum.INVALID_ID);
         return new GraphVertexEntity<>(graphVertexType, id, propertyMap);
     }
 }

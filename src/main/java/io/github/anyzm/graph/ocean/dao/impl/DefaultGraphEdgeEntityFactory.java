@@ -88,22 +88,22 @@ public class DefaultGraphEdgeEntityFactory implements GraphEdgeEntityFactory {
         // 终点类型
         GraphVertexType<?> dstVertexType = graphEdgeType.getDstVertexType();
         Field[] declaredFields = inputClass.getDeclaredFields();
-        String srcId = null;
-        String dstId = null;
+        S srcId = null;
+        T dstId = null;
         // 所有属性与值
         Map<String, Object> propertyMap = Maps.newHashMapWithExpectedSize(declaredFields.length);
         Pair<String, String> idPair = collectEdgeEntityProperties(input, declaredFields, graphEdgeType, propertyMap);
-        srcId = StringUtils.isNotBlank(idPair.getKey()) ? idPair.getKey() : srcId;
-        dstId = StringUtils.isNotBlank(idPair.getValue()) ? idPair.getValue() : dstId;
+        srcId = StringUtils.isNotBlank(idPair.getKey()) ? (S) idPair.getKey() : srcId;
+        dstId = StringUtils.isNotBlank(idPair.getValue()) ? (T) idPair.getValue() : dstId;
         Class<? super E> superclass = inputClass.getSuperclass();
         while (superclass != Object.class) {
             declaredFields = superclass.getDeclaredFields();
             idPair = collectEdgeEntityProperties(input, declaredFields, graphEdgeType, propertyMap);
-            srcId = StringUtils.isNotBlank(idPair.getKey()) ? idPair.getKey() : srcId;
-            dstId = StringUtils.isNotBlank(idPair.getValue()) ? idPair.getValue() : dstId;
+            srcId = StringUtils.isNotBlank(idPair.getKey()) ? (S) idPair.getKey() : srcId;
+            dstId = StringUtils.isNotBlank(idPair.getValue()) ? (T) idPair.getValue() : dstId;
             superclass = superclass.getSuperclass();
         }
-        CheckThrower.ifTrueThrow(StringUtils.isBlank(srcId) || StringUtils.isBlank(dstId),
+        CheckThrower.ifTrueThrow(StringUtils.isBlank((CharSequence) srcId) || StringUtils.isBlank((CharSequence) dstId),
                 ErrorEnum.INVALID_ID);
         return new GraphEdgeEntity(graphEdgeType, srcId, dstId, srcVertexType, dstVertexType, propertyMap);
     }

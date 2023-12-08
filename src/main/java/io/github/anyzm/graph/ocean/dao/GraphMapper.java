@@ -35,7 +35,7 @@ public interface GraphMapper {
      * @return 更新状态
      * @throws NebulaException nebula异常
      */
-    public <T> int saveVertexEntities(List<T> entities) throws NebulaException, ClientServerIncompatibleException, AuthFailedException, NotValidConnectionException, IOErrorException;
+    <T> int saveVertexEntities(List<T> entities) throws NebulaException, ClientServerIncompatibleException, AuthFailedException, NotValidConnectionException, IOErrorException;
 
 
     /**
@@ -50,8 +50,8 @@ public interface GraphMapper {
      * @return 更新状态码
      * @throws NebulaException nebula异常
      */
-    public <S, T, E> int saveEdgeEntitiesWithVertex(List<E> entities, Function<String, S> srcVertexEntityFunction,
-                                                    Function<String, T> dstVertexEntityFunction) throws NebulaException, ClientServerIncompatibleException, AuthFailedException, NotValidConnectionException, IOErrorException;
+    <S, T, E> int saveEdgeEntitiesWithVertex(List<E> entities, Function<String, S> srcVertexEntityFunction,
+                                             Function<String, T> dstVertexEntityFunction) throws NebulaException, ClientServerIncompatibleException, AuthFailedException, NotValidConnectionException, IOErrorException;
 
 
     /**
@@ -61,7 +61,7 @@ public interface GraphMapper {
      * @return 更新状态码
      * @throws NebulaException nebula异常
      */
-    public <S, T, E> int saveEdgeEntities(List<E> entities) throws NebulaException, ClientServerIncompatibleException, AuthFailedException, NotValidConnectionException, IOErrorException;
+    <S, T, E> int saveEdgeEntities(List<E> entities) throws NebulaException, ClientServerIncompatibleException, AuthFailedException, NotValidConnectionException, IOErrorException;
 
 
     /**
@@ -73,7 +73,7 @@ public interface GraphMapper {
      * @throws NebulaException nebula异常
      * @throws NotValidConnectionException 连接异常
      */
-    public int executeBatchUpdateSql(String space, List<String> sqlList) throws NebulaException, NotValidConnectionException, ClientServerIncompatibleException, AuthFailedException, IOErrorException;
+    int executeBatchUpdateSql(String space, List<String> sqlList) throws NebulaException, NotValidConnectionException, ClientServerIncompatibleException, AuthFailedException, IOErrorException;
 
 
     /**
@@ -85,7 +85,7 @@ public interface GraphMapper {
      * @throws NebulaException nebula异常
      * @throws NotValidConnectionException 连接异常
      */
-    public int executeUpdateSql(String space, String sql) throws NebulaException, NotValidConnectionException, IOErrorException, ClientServerIncompatibleException, AuthFailedException;
+    int executeUpdateSql(String space, String sql) throws NebulaException, NotValidConnectionException, IOErrorException, ClientServerIncompatibleException, AuthFailedException;
 
 
     /**
@@ -96,7 +96,7 @@ public interface GraphMapper {
      * @throws NebulaException nebula异常
      * @throws NotValidConnectionException 连接异常
      */
-    public int executeUpdateSql(String sql) throws NebulaException, NotValidConnectionException, IOErrorException, ClientServerIncompatibleException, AuthFailedException;
+    int executeUpdateSql(String sql) throws NebulaException, NotValidConnectionException, IOErrorException, ClientServerIncompatibleException, AuthFailedException;
 
     /**
      * 执行查询
@@ -105,7 +105,7 @@ public interface GraphMapper {
      * @return 查询结果
      * @throws NebulaException nebula异常
      */
-    public QueryResult executeQuerySql(String sql) throws NebulaException, ClientServerIncompatibleException, AuthFailedException, NotValidConnectionException, IOErrorException;
+    QueryResult executeQuerySql(String sql) throws NebulaException, ClientServerIncompatibleException, AuthFailedException, NotValidConnectionException, IOErrorException;
 
 
     /**
@@ -116,7 +116,7 @@ public interface GraphMapper {
      * @return 查询结果
      * @throws NebulaException nebula异常
      */
-    public QueryResult executeQuerySql(String space, String sql) throws NebulaException, ClientServerIncompatibleException, AuthFailedException, NotValidConnectionException, IOErrorException;
+    QueryResult executeQuerySql(String space, String sql) throws NebulaException, ClientServerIncompatibleException, AuthFailedException, NotValidConnectionException, IOErrorException;
 
 
     /**
@@ -128,7 +128,7 @@ public interface GraphMapper {
      * @return 查询的实体列表
      * @throws NebulaException nebula异常
      */
-    public <T> List<T> executeQuerySql(String sql, Class<T> clazz) throws NebulaException, IllegalAccessException, InstantiationException, UnsupportedEncodingException, ClientServerIncompatibleException, AuthFailedException, NotValidConnectionException, IOErrorException;
+    <T> List<T> executeQuerySql(String sql, Class<T> clazz) throws NebulaException, IllegalAccessException, InstantiationException, UnsupportedEncodingException, ClientServerIncompatibleException, AuthFailedException, NotValidConnectionException, IOErrorException;
 
 
     /**
@@ -138,7 +138,7 @@ public interface GraphMapper {
      * @return 查询结果
      * @throws NebulaException nebula异常
      */
-    public QueryResult executeQuery(GraphQuery query) throws NebulaException, ClientServerIncompatibleException, AuthFailedException, NotValidConnectionException, IOErrorException;
+    QueryResult executeQuery(GraphQuery query) throws NebulaException, ClientServerIncompatibleException, AuthFailedException, NotValidConnectionException, IOErrorException;
 
 
     /**
@@ -149,7 +149,7 @@ public interface GraphMapper {
      * @return 查询结果
      * @throws NebulaException nebula异常
      */
-    public QueryResult executeQuery(String space, GraphQuery query) throws NebulaException, ClientServerIncompatibleException, AuthFailedException, NotValidConnectionException, IOErrorException;
+    QueryResult executeQuery(String space, GraphQuery query) throws NebulaException, ClientServerIncompatibleException, AuthFailedException, NotValidConnectionException, IOErrorException;
 
 
     /**
@@ -161,7 +161,7 @@ public interface GraphMapper {
      * @return 实体列表
      * @throws NebulaException nebula异常
      */
-    public <T> List<T> executeQuery(GraphQuery query, Class<T> clazz) throws NebulaException, IllegalAccessException, InstantiationException, UnsupportedEncodingException, ClientServerIncompatibleException, AuthFailedException, NotValidConnectionException, IOErrorException;
+    <T> List<T> executeQuery(GraphQuery query, Class<T> clazz) throws NebulaException, IllegalAccessException, InstantiationException, UnsupportedEncodingException, ClientServerIncompatibleException, AuthFailedException, NotValidConnectionException, IOErrorException;
 
 
     /**
@@ -171,7 +171,7 @@ public interface GraphMapper {
      * @param vertexIds 顶点id
      * @return 出边列表
      */
-    public <T> List<T> goOutEdge(Class<T> edgeClazz, String... vertexIds) throws UnsupportedEncodingException, IllegalAccessException, InstantiationException, ClientServerIncompatibleException, AuthFailedException, NotValidConnectionException, IOErrorException;
+    <T> List<T> goOutEdge(Class<T> edgeClazz, String... vertexIds) throws UnsupportedEncodingException, IllegalAccessException, InstantiationException, ClientServerIncompatibleException, AuthFailedException, NotValidConnectionException, IOErrorException;
 
     /**
      * 查询反向边
@@ -181,7 +181,7 @@ public interface GraphMapper {
      * @param <T> 入边类型
      * @return 入边列表
      */
-    public <T> List<T> goReverseEdge(Class<T> edgeClazz, String... vertexIds) throws UnsupportedEncodingException, IllegalAccessException, InstantiationException, ClientServerIncompatibleException, AuthFailedException, NotValidConnectionException, IOErrorException;
+    <T> List<T> goReverseEdge(Class<T> edgeClazz, String... vertexIds) throws UnsupportedEncodingException, IllegalAccessException, InstantiationException, ClientServerIncompatibleException, AuthFailedException, NotValidConnectionException, IOErrorException;
 
     /**
      * 查询tag
@@ -190,6 +190,6 @@ public interface GraphMapper {
      * @param vertexIds 顶点id
      * @return 顶点列表
      */
-    public <T> List<T> fetchVertexTag(Class<T> vertexClazz, String... vertexIds) throws UnsupportedEncodingException, IllegalAccessException, InstantiationException, ClientServerIncompatibleException, AuthFailedException, NotValidConnectionException, IOErrorException;
+    <T,S> List<T> fetchVertexTag(Class<T> vertexClazz, S... vertexIds) throws UnsupportedEncodingException, IllegalAccessException, InstantiationException, ClientServerIncompatibleException, AuthFailedException, NotValidConnectionException, IOErrorException;
 
 }

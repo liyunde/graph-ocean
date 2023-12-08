@@ -40,9 +40,9 @@ public class NebulaQueryUtils {
         }
     }
 
-    public static void appendVertexId(GraphVertexType graphVertexType, StringBuilder sqlBuilder, String... vertexIds) {
-        for (String vertexId : vertexIds) {
-            String vertexIdKey = GraphHelper.getQueryId(graphVertexType, vertexId);
+    public static <T> void appendVertexId(GraphVertexType graphVertexType, StringBuilder sqlBuilder, T... vertexIds) {
+        for (T vertexId : vertexIds) {
+            T vertexIdKey = GraphHelper.getQueryId(graphVertexType, vertexId);
             sqlBuilder.append(" ").append(vertexIdKey).append(",");
         }
     }

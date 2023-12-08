@@ -130,8 +130,8 @@ public class NebulaBatchEdgesUpdate<S, T, E> implements EdgeUpdateEngine<S, T, E
     }
 
     private String generateSql(GraphEdgeEntity<S, T, E> graphEdgeEntity) throws NebulaException {
-        String src = GraphHelper.getQuerySrcId(graphEdgeEntity.getGraphEdgeType(), graphEdgeEntity.getSrcId());
-        String end = GraphHelper.getQueryDstId(graphEdgeEntity.getGraphEdgeType(), graphEdgeEntity.getDstId());
+        S src = GraphHelper.getQuerySrcId(graphEdgeEntity.getGraphEdgeType(), graphEdgeEntity.getSrcId());
+        T end = GraphHelper.getQueryDstId(graphEdgeEntity.getGraphEdgeType(), graphEdgeEntity.getDstId());
         Set<Map.Entry<String, Object>> entries = graphEdgeEntity.getProps().entrySet();
         StringBuilder sqlBuilder = new StringBuilder();
         Map<String, GraphDataTypeEnum> dataTypeMap = graphEdgeEntity.getGraphEdgeType().getDataTypeMap();

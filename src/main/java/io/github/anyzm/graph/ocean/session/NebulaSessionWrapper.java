@@ -43,7 +43,7 @@ public class NebulaSessionWrapper implements NebulaSession {
 
     @Override
     public int execute(String statement) throws NebulaExecuteException {
-        ResultSet resultSet = null;
+        ResultSet resultSet;
         try {
             log.debug("execute执行nebula,ngql={}", statement);
             resultSet = this.session.execute(statement);
@@ -59,14 +59,14 @@ public class NebulaSessionWrapper implements NebulaSession {
             //版本冲突，session内部不再打印错误日志，直接抛出自定义的版本异常
             throw new NebulaVersionConflictException(resultSet.getErrorCode(), resultSet.getErrorMessage());
         }
-        log.error("更新nebula异常 code:{}, msg:{}, nGql:{} ",
+        log.error("更新nebula异常 code:{}, msg:{}, nGql: {} ",
                 resultSet.getErrorCode(), resultSet.getErrorMessage(), statement);
         throw new NebulaExecuteException(resultSet.getErrorCode(), resultSet.getErrorMessage());
     }
 
     @Override
     public ResultSet executeQuery(String statement) throws NebulaExecuteException {
-        ResultSet resultSet = null;
+        ResultSet resultSet;
         try {
             log.debug("executeQuery执行nebula,ngql={}", statement);
             resultSet = this.session.execute(statement);

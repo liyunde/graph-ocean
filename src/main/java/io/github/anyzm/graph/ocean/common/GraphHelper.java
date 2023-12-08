@@ -62,28 +62,30 @@ public class GraphHelper {
         return timestamp.getTime() / 1000;
     }
 
-    private static String generateKeyPolicy(GraphKeyPolicy graphKeyPolicy,@Nonnull String vertexIdKey) {
+    private static <T> T generateKeyPolicy(GraphKeyPolicy graphKeyPolicy, @Nonnull T vertexIdKey) {
         if (graphKeyPolicy.equals(GraphKeyPolicy.string_key)) {
-            return String.format(STRING_ID_TEMPLATE, graphKeyPolicy.getKeyWrapWord(), vertexIdKey);
+            return (T) String.format(STRING_ID_TEMPLATE, graphKeyPolicy.getKeyWrapWord(), vertexIdKey);
+        } else if (GraphKeyPolicy.int64.equals(graphKeyPolicy)) {
+            return vertexIdKey;
         } else {
-            return String.format(ENDPOINT_TEMPLATE, graphKeyPolicy.getKeyWrapWord(), vertexIdKey);
+            return (T) String.format(ENDPOINT_TEMPLATE, graphKeyPolicy.getKeyWrapWord(), vertexIdKey);
         }
     }
 
-    public static String getQueryId(GraphVertexType vertexTag, String vertexKey) {
-        String vertexIdKey = vertexTag.getVertexIdKey(vertexKey);
+    public static <T> T getQueryId(GraphVertexType vertexTag, T vertexKey) {
+        T vertexIdKey = (T) vertexTag.getVertexIdKey(vertexKey);
         GraphKeyPolicy graphKeyPolicy = vertexTag.getGraphKeyPolicy();
         return generateKeyPolicy(graphKeyPolicy, vertexIdKey);
     }
 
-    public static String getQuerySrcId(GraphEdgeType edgeType, String vertexKey) {
-        String vertexIdKey = edgeType.getSrcIdKey(vertexKey);
+    public static <T> T getQuerySrcId(GraphEdgeType edgeType, T vertexKey) {
+        T vertexIdKey = (T) edgeType.getSrcIdKey(vertexKey);
         GraphKeyPolicy graphKeyPolicy = edgeType.getSrcVertexType().getGraphKeyPolicy();
         return generateKeyPolicy(graphKeyPolicy, vertexIdKey);
     }
 
-    public static String getQueryDstId(GraphEdgeType edgeType, String vertexKey) {
-        String vertexIdKey = edgeType.getDstIdKey(vertexKey);
+    public static <T> T getQueryDstId(GraphEdgeType edgeType, T vertexKey) {
+        T vertexIdKey = (T) edgeType.getDstIdKey(vertexKey);
         GraphKeyPolicy graphKeyPolicy = edgeType.getDstVertexType().getGraphKeyPolicy();
         return generateKeyPolicy(graphKeyPolicy, vertexIdKey);
     }
@@ -195,11 +197,11 @@ public class GraphHelper {
         Field[] declaredFields = clazz.getDeclaredFields();
         int size = declaredFields.length;
         List<String> mustProps = Lists.newArrayListWithExpectedSize(size);
-        //所有属性（包括必要属性）
+        // 所有属性（包括必要属性）
         Map<String, String> propertyFieldMap = Maps.newHashMapWithExpectedSize(size);
-        //字段类型
+        // 字段类型
         Map<String, GraphDataTypeEnum> dataTypeMap = Maps.newHashMapWithExpectedSize(size);
-        //字段转换工厂
+        // 字段转换工厂
         Map<String, GraphValueFormatter> propertyFormatMap = Maps.newHashMapWithExpectedSize(size);
         for (Field declaredField : declaredFields) {
             collectGraphField(graphLabelBuilder, declaredField, mustProps, propertyFieldMap, propertyFormatMap,

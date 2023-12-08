@@ -27,6 +27,6 @@ public interface GraphUpdateVertexEngineFactory {
      * @return 顶点更新引擎
      * @throws NebulaException nebula异常
      */
-    public <T> VertexUpdateEngine build(List<GraphVertexEntity<T>> graphVertexEntities) throws NebulaException;
+    <T> VertexUpdateEngine build(List<GraphVertexEntity<T>> graphVertexEntities) throws NebulaException;
 
 }

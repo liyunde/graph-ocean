@@ -22,13 +22,13 @@ public class GraphVertexEntity<T> extends GraphPropertyEntity {
     /**
      * 顶点 id
      */
-    private final String id;
+    private final T id;
     /**
      * 图顶点类型
      */
     private GraphVertexType<T> graphVertexType;
 
-    public GraphVertexEntity(GraphVertexType<T> graphVertexType, String id, Map<String, Object> props) {
+    public GraphVertexEntity(GraphVertexType<T> graphVertexType, T id, Map<String, Object> props) {
         super(props);
         if (props == null) {
             throw new IllegalArgumentException("vertexTag or props not empty");

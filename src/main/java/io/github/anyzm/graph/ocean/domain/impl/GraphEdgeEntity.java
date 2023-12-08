@@ -26,11 +26,11 @@ public class GraphEdgeEntity<S, T, E> extends GraphPropertyEntity implements Gra
     /**
      * 起点 id
      */
-    private final String srcId;
+    private final S srcId;
     /**
      * 终点 id
      */
-    private final String dstId;
+    private final T dstId;
 
     private final GraphEdgeType<S, T, E> graphEdgeType;
 
@@ -52,8 +52,8 @@ public class GraphEdgeEntity<S, T, E> extends GraphPropertyEntity implements Gra
 
     @Override
     public int getHashCode() {
-        String startId = this.getSrcId();
-        String endId = this.getDstId();
+        S startId = this.getSrcId();
+        T endId = this.getDstId();
         GraphVertexType srcVertex = this.getSrcVertexType();
         GraphVertexType endVertex = this.getDstVertexType();
         return Objects.hashCode(startId, endId, srcVertex, endVertex);
@@ -69,8 +69,11 @@ public class GraphEdgeEntity<S, T, E> extends GraphPropertyEntity implements Gra
         }
         GraphRelation graphRelation = (GraphRelation) o;
 
-        String startId = this.getSrcId();
-        String endId = this.getDstId();
+        S startId = this.getSrcId();
+        T endId = this.getDstId();
+
+        if (startId.getClass() != endId.getClass()) return false;
+
         GraphVertexType srcVertex = getSrcVertexType();
         GraphVertexType endVertex = this.getDstVertexType();
         return startId.equals(graphRelation.getSrcId()) &&
@@ -78,7 +81,7 @@ public class GraphEdgeEntity<S, T, E> extends GraphPropertyEntity implements Gra
                 Objects.equal(endVertex, graphRelation.getDstVertexType());
     }
 
-    public GraphEdgeEntity(GraphEdgeType<S, T, E> graphEdgeType, String srcId, String dstId,
+    public GraphEdgeEntity(GraphEdgeType<S, T, E> graphEdgeType, S srcId, T dstId,
                            GraphVertexType<S> srcVertex, GraphVertexType<T> dstVertex, Map<String, Object> props) {
         super(props);
         this.graphEdgeType = graphEdgeType;
@@ -88,8 +91,8 @@ public class GraphEdgeEntity<S, T, E> extends GraphPropertyEntity implements Gra
         this.dstVertexType = dstVertex;
     }
 
-    public GraphEdgeEntity(GraphEdgeType<S, T, E> graphEdgeType, String srcId,
-                           String dstId, GraphVertexType<S> srcVertex, GraphVertexType<T> dstVertex) {
+    public GraphEdgeEntity(GraphEdgeType<S, T, E> graphEdgeType, S srcId, T dstId,
+                           GraphVertexType<S> srcVertex, GraphVertexType<T> dstVertex) {
         super(Collections.emptyMap());
         this.graphEdgeType = graphEdgeType;
         this.srcId = srcId;

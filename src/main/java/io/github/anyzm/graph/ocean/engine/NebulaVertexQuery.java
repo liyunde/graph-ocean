@@ -39,7 +39,7 @@ public class NebulaVertexQuery implements VertexQuery {
     }
 
     @Override
-    public VertexQuery fetchPropOn(Class clazz, String... vertexIds) {
+    public <T> VertexQuery fetchPropOn(Class clazz, T... vertexIds) {
         GraphVertexType graphVertexType = graphTypeManager.getGraphVertexType(clazz);
         String vertexName = graphVertexType.getVertexName();
         sqlBuilder.append("fetch prop on ").append(vertexName);
