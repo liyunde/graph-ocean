@@ -171,7 +171,7 @@ public interface GraphMapper {
      * @param vertexIds 顶点id
      * @return 出边列表
      */
-    <T> List<T> goOutEdge(Class<T> edgeClazz, String... vertexIds) throws UnsupportedEncodingException, IllegalAccessException, InstantiationException, ClientServerIncompatibleException, AuthFailedException, NotValidConnectionException, IOErrorException;
+    <T,P> List<T> goOutEdge(Class<T> edgeClazz, P... vertexIds) throws UnsupportedEncodingException, IllegalAccessException, InstantiationException, ClientServerIncompatibleException, AuthFailedException, NotValidConnectionException, IOErrorException;
 
     /**
      * 查询反向边

@@ -25,7 +25,7 @@ public interface EdgeQuery extends GraphQuery {
      * @param vertexIds 顶点id
      * @return 查询API
      */
-    public EdgeQuery goFrom(Class clazz, String... vertexIds);
+    public <P> EdgeQuery goFrom(Class clazz, P... vertexIds);
 
     /**
      * 根据方向,检索哪些顶点id的边l

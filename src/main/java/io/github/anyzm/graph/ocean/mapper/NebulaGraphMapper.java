@@ -34,7 +34,6 @@ import lombok.extern.slf4j.Slf4j;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 
 /**
  * Description  NebulaGraphMapper is used for
@@ -255,7 +254,7 @@ public class NebulaGraphMapper implements GraphMapper {
     }
 
     @Override
-    public <T> List<T> goOutEdge(Class<T> edgeClazz, String... vertexIds) throws
+    public <T, P> List<T> goOutEdge(final Class<T> edgeClazz, final P... vertexIds) throws
             UnsupportedEncodingException, IllegalAccessException, InstantiationException, ClientServerIncompatibleException, AuthFailedException, NotValidConnectionException, IOErrorException {
         GraphEdgeType<Object, Object, T> graphEdgeType = graphTypeManager.getGraphEdgeType(edgeClazz);
         String[] fieldsName = CollectionUtils.toStringArray(graphEdgeType.getAllFields());

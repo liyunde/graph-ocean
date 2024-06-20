@@ -30,7 +30,7 @@ public class NebulaEdgeQuery implements EdgeQuery {
     @Setter
     private static GraphTypeManager graphTypeManager;
 
-    private StringBuilder sqlBuilder = new StringBuilder();
+    private final StringBuilder sqlBuilder = new StringBuilder();
 
     private NebulaEdgeQuery() {
     }
@@ -43,7 +43,7 @@ public class NebulaEdgeQuery implements EdgeQuery {
         sqlBuilder.append("go from ");
     }
 
-    private void appendEdgeVertexId(Class clazz, boolean isReverse, String... vertexIds) {
+    private <P> void appendEdgeVertexId(Class clazz, boolean isReverse, P... vertexIds) {
         GraphEdgeType graphEdgeType = graphTypeManager.getGraphEdgeType(clazz);
         String edgeName = graphEdgeType.getEdgeName();
         if (isReverse) {
@@ -55,7 +55,7 @@ public class NebulaEdgeQuery implements EdgeQuery {
         sqlBuilder.append(" over ").append(edgeName);
     }
 
-    private void appendSrcVertexId(Class clazz, String... vertexIds) {
+    private <P> void appendSrcVertexId(Class clazz, P... vertexIds) {
         appendEdgeVertexId(clazz, false, vertexIds);
     }
 
@@ -75,7 +75,7 @@ public class NebulaEdgeQuery implements EdgeQuery {
     }
 
     @Override
-    public EdgeQuery goFrom(Class clazz, String... vertexIds) {
+    public <P> EdgeQuery goFrom(Class clazz, P... vertexIds) {
         goFromOnly();
         appendSrcVertexId(clazz, vertexIds);
         return this;

@@ -26,16 +26,16 @@ import java.util.Map;
  */
 public class NebulaQueryUtils {
 
-    public static void appendVertexSrcId(GraphEdgeType graphEdgeType, StringBuilder sqlBuilder, String... vertexIds) {
-        for (String vertexId : vertexIds) {
-            String vertexIdKey = GraphHelper.getQuerySrcId(graphEdgeType, vertexId);
+    public static <P> void appendVertexSrcId(GraphEdgeType graphEdgeType, StringBuilder sqlBuilder, P... vertexIds) {
+        for (P vertexId : vertexIds) {
+            String vertexIdKey = GraphHelper.getQuerySrcId(graphEdgeType, vertexId.toString());
             sqlBuilder.append(" ").append(vertexIdKey).append(",");
         }
     }
 
-    public static void appendVertexDstId(GraphEdgeType graphEdgeType, StringBuilder sqlBuilder, String... vertexIds) {
-        for (String vertexId : vertexIds) {
-            String vertexIdKey = GraphHelper.getQueryDstId(graphEdgeType, vertexId);
+    public static <P> void appendVertexDstId(GraphEdgeType graphEdgeType, StringBuilder sqlBuilder, P... vertexIds) {
+        for (P vertexId : vertexIds) {
+            String vertexIdKey = GraphHelper.getQueryDstId(graphEdgeType, vertexId.toString());
             sqlBuilder.append(" ").append(vertexIdKey).append(",");
         }
     }
